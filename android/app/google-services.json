@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "475152859846",
+    "project_id": "tiktok-clone-2769b",
+    "storage_bucket": "tiktok-clone-2769b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475152859846:android:119b3d47f6d0a7d8ec8dc7",
+        "android_client_info": {
+          "package_name": "jp.co.freemind.kakeru.tiktok_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475152859846-m3l7roa49hgnkf804cf2smtcm247kmuj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWLwVl9SLE95Sh4URSkJXTryUHZskBF_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475152859846-m3l7roa49hgnkf804cf2smtcm247kmuj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
