@@ -42,6 +42,7 @@ class LoginScreen extends StatelessWidget {
                 controller: _emailController,
                 labelText: 'Email',
                 icon: Icons.email,
+                inputType: TextInputType.emailAddress,
               ),
             ),
             const SizedBox(
@@ -54,6 +55,7 @@ class LoginScreen extends StatelessWidget {
                 controller: _passwordController,
                 labelText: 'Password',
                 icon: Icons.lock,
+                inputType: TextInputType.emailAddress,
                 isObscure: true,
               ),
             ),
@@ -70,8 +72,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               child: InkWell(
-                onTap: () => authController.loginUser(
-                    _emailController.text, _passwordController.text),
+                onTap: () => authController.loginUser(_emailController.text, _passwordController.text),
                 child: const Center(
                   child: Text(
                     'Login',
@@ -94,7 +95,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    print('navigating user');
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                   child: Text(
                     'Register',

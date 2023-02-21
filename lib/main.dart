@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: backgroundColor,
       ),
       home: LoginScreen(),
+      // home: SignupScreen(),
     );
   }
 }

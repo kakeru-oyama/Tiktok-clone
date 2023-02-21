@@ -6,12 +6,14 @@ class TextInputField extends StatelessWidget {
   final String labelText;
   final IconData icon;
   final bool isObscure;
+  final TextInputType inputType;
   const TextInputField({
     super.key,
     required this.controller,
     required this.labelText,
     required this.icon,
     this.isObscure = false,
+    this.inputType = TextInputType.text,
   });
 
   @override

@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/constants.dart';
+import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
 import 'package:tiktok_clone/views/widgets/text_input_field.dart';
 
 class SignupScreen extends StatelessWidget {
@@ -41,8 +44,11 @@ class SignupScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 64,
-                  backgroundImage: NetworkImage(
-                      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'),
+                  backgroundImage: authController.profilePhoto == null
+                      ? NetworkImage(
+                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
+                        )
+                      : FileImage(authController.profilePhoto!) as ImageProvider?,
                   backgroundColor: Colors.black,
                 ),
                 Positioned(
@@ -77,6 +83,7 @@ class SignupScreen extends StatelessWidget {
                 controller: _emailController,
                 labelText: 'Email',
                 icon: Icons.email,
+                inputType: TextInputType.emailAddress,
               ),
             ),
             const SizedBox(
@@ -88,6 +95,7 @@ class SignupScreen extends StatelessWidget {
               child: TextInputField(
                 controller: _passwordController,
                 labelText: 'Password',
+                inputType: TextInputType.emailAddress,
                 icon: Icons.lock,
                 isObscure: true,
               ),
@@ -109,7 +117,7 @@ class SignupScreen extends StatelessWidget {
                   _usernameController.text,
                   _emailController.text,
                   _passwordController.text,
-                  authController.ProfilePhoto,
+                  authController.profilePhoto,
                 ),
                 child: const Center(
                   child: Text(
@@ -133,7 +141,7 @@ class SignupScreen extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    print('navigating user');
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen()));
                   },
                   child: Text(
                     'Login',

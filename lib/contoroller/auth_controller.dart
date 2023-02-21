@@ -6,13 +6,15 @@ import 'package:image_picker/image_picker.dart';
 import 'package:tiktok_clone/constants.dart';
 import 'package:tiktok_clone/models/user.dart' as model;
 import 'package:tiktok_clone/views/screens/auth/login_screen.dart';
+import 'package:tiktok_clone/views/screens/auth/signup_screen.dart';
 import 'package:tiktok_clone/views/screens/home_screen.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   late Rx<User?> _user;
   late Rx<File?> _pickedImage;
-  File? get ProfilePhoto => _pickedImage.value;
+  File? get profilePhoto => _pickedImage.value;
+  User get user => _user.value!;
 
   @override
   void onReady() {
@@ -24,30 +26,28 @@ class AuthController extends GetxController {
 
   _setInitialScreen(User? user) {
     if (user == null) {
-      Get.offAll(() => LoginScreen());
+      //Get.offAll(() => LoginScreen());
+      Get.offAll(() => SignupScreen());
     } else {
       Get.offAll(() => HomeScreen());
     }
   }
 
   void pickImage() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedImage != null) {
       Get.snackbar(
         'Profile Picture',
         'You are successfully selected your profile picture!',
       );
       _pickedImage = Rx<File?>(File(pickedImage.path));
+      print('dbgmsg: profilePhoto => ${_pickedImage}');
     }
   }
 
 //upload to firebase storage
   Future<String> _uploadToStorage(File image) async {
-    Reference ref = firebaseStorage
-        .ref()
-        .child('profilePics')
-        .child(firebaseAuth.currentUser!.uid);
+    Reference ref = firebaseStorage.ref().child('profilePics').child(firebaseAuth.currentUser!.uid);
     UploadTask uploadTask = ref.putFile(image);
     TaskSnapshot snap = await uploadTask;
     String downloadURL = await snap.ref.getDownloadURL();
@@ -62,10 +62,7 @@ class AuthController extends GetxController {
     File? image,
   ) async {
     try {
-      if (username.isNotEmpty &&
-          email.isNotEmpty &&
-          password.isNotEmpty &&
-          image != null) {
+      if (username.isNotEmpty && email.isNotEmpty && password.isNotEmpty && image != null) {
         // save out user to our ath and firebase firestore
         UserCredential cred = await firebaseAuth.createUserWithEmailAndPassword(
           email: email,
@@ -78,10 +75,7 @@ class AuthController extends GetxController {
           email: email,
           uid: cred.user!.uid,
         );
-        await firestore
-            .collection('users')
-            .doc(cred.user!.uid)
-            .set(user.toJson());
+        await firestore.collection('users').doc(cred.user!.uid).set(user.toJson());
       } else {
         Get.snackbar(
           'Error Creating Account',
@@ -116,5 +110,9 @@ class AuthController extends GetxController {
         e.toString(),
       );
     }
+  }
+
+  signOut() async {
+    await firebaseAuth.signOut();
   }
 }
